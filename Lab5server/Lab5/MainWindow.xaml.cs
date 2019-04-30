@@ -25,19 +25,18 @@ namespace Lab5
     {
         const int port = 8888;
         static TcpListener listener;
+        TcpClient client;
+        NetworkStream stream = null;
 
         public MainWindow()
         {
             InitializeComponent();
-
-
-
         }
 
         public void Process(TcpClient tcpClient)
         {
-            TcpClient client = tcpClient;
-            NetworkStream stream = null;
+             client = tcpClient;
+             stream = null;
             try
             {
                 stream = client.GetStream();
@@ -78,12 +77,24 @@ namespace Lab5
 
         public void listen()
         {
-            while (true)
+            try
             {
-                TcpClient client = listener.AcceptTcpClient();
-                Dispatcher.BeginInvoke(new Action(() => log.Items.Add("client connected")));
-                Thread clientTread = new Thread(() => Process(client));
-                clientTread.Start();
+                while (true)
+                {
+                    client = listener.AcceptTcpClient();
+                    Dispatcher.BeginInvoke(new Action(() => log.Items.Add("client connected")));
+                    Thread clientTread = new Thread(() => Process(client));
+                    clientTread.Start();
+
+                }
+            }
+            catch
+            {
+                if (stream != null)
+                    stream.Close();
+                if (client != null)
+                    client.Close();
+
             }
         }
 
@@ -95,6 +106,24 @@ namespace Lab5
             Thread clientTread = new Thread(() => listen());
             clientTread.Start();
         }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            if (listener != null)
+                listener.Stop();
+        }
     }
+
+//    using System;
+
+//static class StringHelper
+//    {
+//        public static string ReverseString(string s)
+//        {
+//            char[] arr = s.ToCharArray();
+//            Array.Reverse(arr);
+//            return new string(arr);
+//        }
+//    }
 }
     

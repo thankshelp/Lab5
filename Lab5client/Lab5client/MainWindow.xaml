@@ -11,6 +11,7 @@
         <Button Content="Connect" HorizontalAlignment="Left" Margin="669,10,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click"/>
         <TextBox x:Name="msg" HorizontalAlignment="Left" Height="39" Margin="34,297,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="469"/>
         <Button Content="Send" HorizontalAlignment="Left" Margin="539,297,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click_1"/>
+        <Button Content="Disconnect" HorizontalAlignment="Left" Height="21" Margin="669,35,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click_2"/>
 
     </Grid>
 </Window>

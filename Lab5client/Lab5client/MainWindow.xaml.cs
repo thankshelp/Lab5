@@ -92,6 +92,12 @@ namespace Lab5client
           //  message = String.Format("{0}: {1}", userName, message);
             byte[] data = Encoding.Unicode.GetBytes(message);
             stream.Write(data, 0, data.Length);
+            log.Items.Add(message);
+        }
+
+        private void Button_Click_2(object sender, RoutedEventArgs e)
+        {
+            client.Close();
         }
     }
 }
