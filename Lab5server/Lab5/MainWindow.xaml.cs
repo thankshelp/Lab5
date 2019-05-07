@@ -35,8 +35,8 @@ namespace Lab5
 
         public void Process(TcpClient tcpClient)
         {
-             client = tcpClient;
-             stream = null;
+            client = tcpClient;
+            stream = null;
             try
             {
                 stream = client.GetStream();
@@ -54,10 +54,20 @@ namespace Lab5
                     }
                     while (stream.DataAvailable);
 
-                    string message = builder.ToString() + " with love";
-                    //Console.WriteLine(message);
-                    data = Encoding.Unicode.GetBytes(message);
-                    stream.Write(data, 0, data.Length);
+                    string message = builder.ToString();
+
+                    if (message == "client disconnected")
+                    {
+                        //string message = builder.ToString();
+                        Dispatcher.BeginInvoke(new Action(() =>  log.Items.Add(message)));
+                    }                    
+                    else
+                    {
+                        message = ReverseString(builder.ToString()) + " with love";
+                        //Console.WriteLine(message);
+                        data = Encoding.Unicode.GetBytes(message);
+                        stream.Write(data, 0, data.Length);
+                    }
 
                 }
             }
@@ -94,7 +104,6 @@ namespace Lab5
                     stream.Close();
                 if (client != null)
                     client.Close();
-
             }
         }
 
@@ -105,25 +114,26 @@ namespace Lab5
 
             Thread clientTread = new Thread(() => listen());
             clientTread.Start();
+
+            log.Items.Add("server start work");
         }
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
             if (listener != null)
                 listener.Stop();
+            log.Items.Add("server stop work");
+        }
+    
+
+
+   
+        public static string ReverseString(string s)
+        {
+            char[] arr = s.ToCharArray();
+            Array.Reverse(arr);
+            return new string(arr);
         }
     }
 
-//    using System;
-
-//static class StringHelper
-//    {
-//        public static string ReverseString(string s)
-//        {
-//            char[] arr = s.ToCharArray();
-//            Array.Reverse(arr);
-//            return new string(arr);
-//        }
-//    }
-}
-    
+}   

@@ -97,6 +97,10 @@ namespace Lab5client
 
         private void Button_Click_2(object sender, RoutedEventArgs e)
         {
+            
+            string message = "client disconnected";
+            byte[] data = Encoding.Unicode.GetBytes(message);
+            stream.Write(data, 0, data.Length);
             client.Close();
         }
     }
