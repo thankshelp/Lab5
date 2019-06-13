@@ -27,13 +27,18 @@ namespace Lab5client
 
         TcpClient client = null;
         NetworkStream stream = null;
-
+        name adt;
 
         public MainWindow()
         {
             InitializeComponent();
-           // Console.Write("Enter your name:");
-           // string userName = Console.ReadLine();
+            adt = new name();
+            if(adt.ShowDialog() == true)
+            {
+                string userName = adt.clientName.Text;
+            }
+            //Console.Write("Enter your name:");
+            //string userName = Console.ReadLine();
 
             
 
